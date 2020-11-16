@@ -6,6 +6,8 @@ class ListBoardComponent extends Component {
         super(props)
 
         this.state = {
+            p_num: 1,
+            paging: {},
             boards: []
         }
 
@@ -13,8 +15,13 @@ class ListBoardComponent extends Component {
     }
 
     componentDidMount() {
-        BoardService.getBoards().then((res) => {
-            this.setState({ boards: res.data});
+        //BoardService.getBoards().then((res) => {
+            //this.setState({ boards: res.data});
+        BoardService.getBoards(this.state.p_num).then((res) => {
+            this.setState({ 
+                p_num: res.data.pagingData.currentPageNum,
+                paging: res.data.pagingData,
+                boards: res.data.list});
 
         });
     }
@@ -25,6 +32,54 @@ class ListBoardComponent extends Component {
 
     readBoard(no) {
         this.props.history.push(`/read-board/${no}`);
+    }
+
+    listBoard(p_num) {
+        console.log("pageNum : "+ p_num);
+        BoardService.getBoards(p_num).then((res) => {
+            console.log(res.data);
+
+            this.setState({ 
+                p_num: res.data.pagingData.currentPageNum,
+                paging: res.data.pagingData,
+                boards: res.data.list});
+        });
+        //console.log(this.state.boards);
+    }
+
+    viewPaging() {
+        const pageNums = [];
+
+        for (let i = this.state.paging.pageNumStart; i <= this.state.paging.pageNumEnd; i++ ) {
+            pageNums.push(i);
+        }
+
+        return (pageNums.map((page) => 
+        <li className="page-item" key={page.toString()} >
+            <a className="page-link" onClick = {() => this.listBoard(page)}>{page}</a>
+        </li>
+        ));
+        
+    }
+
+    isPagingPrev(){
+        if (this.state.paging.prev) {
+            return (
+                <li className="page-item">
+                    <a className="page-link" onClick = {() => this.listBoard( (this.state.paging.currentPageNum - 1) )} tabindex="-1">Previous</a>
+                </li>
+            );
+        }
+    }
+
+    isPagingNext(){
+        if (this.state.paging.next) {
+            return (
+                <li className="page-item">
+                    <a className="page-link" onClick = {() => this.listBoard( (this.state.paging.currentPageNum + 1) )} tabIndex="-1">Next</a>
+                </li>
+            );
+        }
     }
 
     render() {
@@ -65,7 +120,21 @@ class ListBoardComponent extends Component {
                         </tbody>
                     </table>
                 </div>
-                
+                <div className ="row">
+                    <nav aria-label="Page navigation example">
+                        <ul className="pagination justify-content-center">
+                            {
+                                this.isPagingPrev()
+                            }
+                            {
+                                this.viewPaging()
+                            }
+                            {
+                                this.isPagingNext()
+                            }
+                        </ul>
+                    </nav>
+                </div>
             </div>
         );
     }

@@ -12,12 +12,40 @@ import org.springframework.stereotype.Service;
 import com.board.back.exception.ResourceNotFoundException;
 import com.board.back.model.Board;
 import com.board.back.repository.BoardRepository;
+import com.board.back.util.PagingUtil;
 
 @Service
 public class BoardService {
 
 	@Autowired
 	private BoardRepository boardRepository;
+	
+	public int findAllCount() {
+		return (int) boardRepository.count();
+	}
+	
+	// get paging boards data
+	public ResponseEntity<Map> getPagingBoard(Integer p_num) {
+		Map result = null;
+		
+		PagingUtil pu = new PagingUtil(p_num, 2, 5); 
+		List<Board> list = boardRepository.findFromTo(pu.getObjectStartNum(), pu.getObjectCountPerPage());
+		pu.setObjectCountTotal(findAllCount());
+		pu.setCalcForPaging();
+		
+		System.out.println("p_num : "+p_num);
+		System.out.println(pu.toString());
+		
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+		
+		result = new HashMap<>();
+		result.put("pagingData", pu);
+		result.put("list", list);
+		
+		return ResponseEntity.ok(result);
+	}	
 	
 	// get boards data
 	public List<Board> getAllBoard() {

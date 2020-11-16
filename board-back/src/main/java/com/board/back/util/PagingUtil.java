@@ -71,7 +71,7 @@ public class PagingUtil {
 	 */
 	public void setObjectStartAndEnd() {
 		this.objectEndNum = currentPageNum * objectCountPerPage;
-		this.objectStartNum = objectEndNum - (objectCountPerPage - 1);
+		this.objectStartNum = (objectEndNum - 1) - (objectCountPerPage - 1);
 
 	}
 

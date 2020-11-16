@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.board.back.model.Board;
@@ -25,12 +26,20 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	// get all board 
+	// get paging board 
 	@GetMapping("/board")
-	public List<Board> getAllBoards() {
+	public ResponseEntity<Map> getAllBoards(@RequestParam(value = "p_num", required=false) Integer p_num) {
+		if (p_num == null || p_num <= 0) p_num = 1;
 		
-		return boardService.getAllBoard();
+		return boardService.getPagingBoard(p_num);
 	}
+	
+//	// get all board 
+//	@GetMapping("/board")
+//	public List<Board> getAllBoards() {
+//		
+//		return boardService.getAllBoard();
+//	}
 
 	// create board
 	@PostMapping("/board")
