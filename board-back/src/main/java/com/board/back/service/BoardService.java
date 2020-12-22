@@ -28,7 +28,7 @@ public class BoardService {
 	public ResponseEntity<Map> getPagingBoard(Integer p_num) {
 		Map result = null;
 		
-		PagingUtil pu = new PagingUtil(p_num, 2, 5); 
+		PagingUtil pu = new PagingUtil(p_num, 5, 5); // ($1:표시할 현재 페이지, $2:한페이지에 표시할 글 수, $3:한 페이지에 표시할 페이지 버튼의 수 )
 		List<Board> list = boardRepository.findFromTo(pu.getObjectStartNum(), pu.getObjectCountPerPage());
 		pu.setObjectCountTotal(findAllCount());
 		pu.setCalcForPaging();

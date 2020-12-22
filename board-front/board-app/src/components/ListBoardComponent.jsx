@@ -82,6 +82,26 @@ class ListBoardComponent extends Component {
         }
     }
 
+    isMoveToFirstPage() {
+        if (this.state.p_num != 1) {
+            return (
+                <li className="page-item">
+                    <a className="page-link" onClick = {() => this.listBoard(1)} tabIndex="-1">Move to First Page</a>
+                </li>
+            );
+        }
+    }
+
+    isMoveToLastPage() {
+        if (this.state.p_num != this.state.paging.pageNumCountTotal) {
+            return (
+                <li className="page-item">
+                    <a className="page-link" onClick = {() => this.listBoard( (this.state.paging.pageNumCountTotal) )} tabIndex="-1">LastPage({this.state.paging.pageNumCountTotal})</a>
+                </li>
+            );
+        }
+    }
+
     render() {
         return (
             <div>
@@ -124,6 +144,9 @@ class ListBoardComponent extends Component {
                     <nav aria-label="Page navigation example">
                         <ul className="pagination justify-content-center">
                             {
+                                this.isMoveToFirstPage()
+                            }
+                            {
                                 this.isPagingPrev()
                             }
                             {
@@ -131,6 +154,9 @@ class ListBoardComponent extends Component {
                             }
                             {
                                 this.isPagingNext()
+                            }
+                            {
+                                this.isMoveToLastPage()
                             }
                         </ul>
                     </nav>

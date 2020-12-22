@@ -34,7 +34,7 @@ public class BoardController {
 		return boardService.getPagingBoard(p_num);
 	}
 	
-//	// get all board 
+	// get all board 
 //	@GetMapping("/board")
 //	public List<Board> getAllBoards() {
 //		

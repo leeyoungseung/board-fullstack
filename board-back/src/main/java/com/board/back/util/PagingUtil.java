@@ -104,7 +104,7 @@ public class PagingUtil {
 			this.pageNumEnd = (pageNumCountTotal < tmpPageNumEnd) ? pageNumCountTotal : tmpPageNumEnd;
 			
 			this.isPrev = (currentPageNum > pageNumCountPerPage) ? true : false;
-			this.isNext = (pageNumEnd < pageNumCountTotal) ? true : false;
+			this.isNext = (pageNumEnd < pageNumCountTotal || (pageNumStart < pageNumEnd && currentPageNum < pageNumCountTotal)  ) ? true : false;
 			
 			this.objectEndNum = (objectCountTotal < objectEndNum) ? objectCountTotal : objectEndNum;
 		    return true;

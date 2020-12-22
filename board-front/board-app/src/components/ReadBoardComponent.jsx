@@ -17,7 +17,10 @@ class ReadBoardComponent extends Component {
     componentDidMount() {
         BoardService.getOneBoard(this.state.no).then( res => {
             this.setState({board: res.data});
+            console.log("get result => "+ JSON.stringify(res.data));
         });
+
+        
     }
 
 
