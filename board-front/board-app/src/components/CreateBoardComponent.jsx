@@ -7,7 +7,7 @@ class CreateBoardComponent extends Component {
 
         this.state = {
             no: this.props.match.params.no,
-            type: '',
+            type: 1,
             title: '',
             contents: '',
             memberNo: ''

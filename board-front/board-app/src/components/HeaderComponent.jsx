@@ -8,12 +8,21 @@ class HeaderComponent extends Component {
 
         }
     }
+
     render() {
         return (
             <div>
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                        <div><a href="https://localhost:3000" className="navbar-brand"> Board-FullStack-App</a></div>
+                        <div><a href="http://localhost:3000" className="navbar-brand"> Board-FullStack-App</a></div>
+                        <div>
+                            <ul className="navbar-nav">
+                                <li className="nav-item">
+                                    <a href="http://localhost:3000/member-join" className="nav-link">JOIN</a>
+                                </li>
+                            </ul>
+                            
+                            </div>
                     </nav>
                 </header>
             </div>
